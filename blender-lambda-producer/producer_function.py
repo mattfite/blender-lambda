@@ -27,6 +27,9 @@ sqs_queue = boto3.resource('sqs').get_queue_by_name(QueueName=QUEUE_NAME)
 
 def handler(event, context):
     logger.info('Starting producer lambda function')
+    # Log the incoming event
+    print("Received event: " + json.dumps(event))
+
 
     try:
         render_request = json.loads(event['body'])
@@ -62,7 +65,7 @@ def get_frame_range(render_request: dict) -> Tuple[int, int]:
         return (int(render_request['frame_start']), int(render_request['frame_end']))
 
     logger.info(f'Getting frame range from {LOCAL_RENDER_FILE}')
-    proc = subprocess.Popen(['blender', '-b', LOCAL_RENDER_FILE, '-P', 'get_frames.py'], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(['blender', '-b', LOCAL_RENDER_FILE, '-P', 'get_frames.py', '-E', ' CYCLES'], stdout=subprocess.PIPE)
     (out, err) = proc.communicate()
     logger.debug(f'get_frames output: {out}')
     logger.debug(f'get_frames error: {err}')

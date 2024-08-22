@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import sys
+import subprocess
 
 # from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
 logger = logging.getLogger()
@@ -20,6 +21,10 @@ LOCAL_RENDER_FILE = '/tmp/render_file.blend'
 
 def handler(event, context):
     try:
+        # Log the incoming event
+        logger.info("Handler begin")
+        logger.info("Received event: " + json.dumps(event))
+
         received_body = event['Records'][0]['body']
         record = json.loads(received_body)
 
@@ -37,7 +42,7 @@ def handler(event, context):
 
         upload_file_to_s3(output_file)
 
-        logger.info('Done.')
+        logger.info('Handler complete')
     except Exception as e:
         logger.exception(e)
         raise e
@@ -46,7 +51,28 @@ def handler(event, context):
 def render_frame(frame, output_file):
     logger.info(f'Rendering frame: {frame}')
 
-    os.system(f"blender -b -P render_frame.py -- {LOCAL_RENDER_FILE} {output_file} {frame}")
+    logger.info("calling blender")
+    logger.info(f"LOCAL_RENDER_FILE {LOCAL_RENDER_FILE}")
+    logger.info(f"output_file {output_file}")
+    logger.info(f"frame {frame}")
+
+    result = subprocess.run(
+        [
+            "blender",
+            "-b", LOCAL_RENDER_FILE,
+            "-P", "relink_textures.py",
+            "-o", "/tmp/rendered_",
+            "-F", "PNG",
+            "-x", "1",
+            "-E", "CYCLES",
+            "-f", str(frame)
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+    logger.info(f"stdout: {result.stdout.decode()}")
+    logger.info(f"stderr: {result.stderr.decode()}")
 
     logger.info(f'Rendering frame: {frame} done')
 

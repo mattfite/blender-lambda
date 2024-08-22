@@ -1,14 +1,8 @@
-# variable "aws_account_id" {
-#     description = "AWS Account ID"
-
-#     type = string
-# }
-
 variable "aws_region" {
     description = "AWS region for all resources"
 
     type = string
-    default = "us-east-1"
+    default = "us-west-1"
 }
 
 variable "producer_ecr_repo" {
@@ -27,7 +21,7 @@ variable "lambda_bucket" {
     description = "Bucket for all lambda archives"
 
     type = string
-    default = "temp-lambda-archive-bucket"
+    default = "mattfite-temp-lambda-archive-bucket-1234554321"
 }
 
 variable "default_tags" {

@@ -1,7 +1,20 @@
 resource "aws_s3_bucket" "lambda_bucket" {
     bucket = var.lambda_bucket
-    acl = "private"
     force_destroy = true
+}
+
+resource "aws_s3_bucket_ownership_controls" "lambda_bucket_controls" {
+  bucket = aws_s3_bucket.lambda_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "lambda_bucket_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.lambda_bucket_controls]
+
+  bucket = aws_s3_bucket.lambda_bucket.id
+  acl    = "private"
 }
 
 resource "aws_iam_role" "lambda_exec" {
