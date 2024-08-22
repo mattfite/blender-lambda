@@ -1,122 +1,122 @@
 variable "aws_region" {
-    description = "AWS region for all resources"
+  description = "AWS region for all resources"
 
-    type = string
-    default = "us-west-1"
+  type    = string
+  default = "us-west-1"
 }
 
 variable "producer_ecr_repo" {
-    description = "ECR repository name for producer function"
+  description = "ECR repository name for producer function"
 
-    type = string
+  type = string
 }
 
 variable "consumer_ecr_repo" {
-    description = "ECR repository name for consumer function"
+  description = "ECR repository name for consumer function"
 
-    type = string
+  type = string
 }
 
 variable "lambda_bucket" {
-    description = "Bucket for all lambda archives"
+  description = "Bucket for all lambda archives"
 
-    type = string
-    default = "mattfite-temp-lambda-archive-bucket-1234554321"
+  type    = string
+  default = "mattfite-temp-lambda-archive-bucket-1234554321"
 }
 
 variable "default_tags" {
-    type = map
-    description = "Default tags to apply to all resources"
-    default = {}
+  type        = map(any)
+  description = "Default tags to apply to all resources"
+  default     = {}
 }
 
 variable "producer_lambda_function_name" {
-    description = "Name of the producer lambda function"
+  description = "Name of the producer lambda function"
 
-    type = string
-    default = "producer-lambda-function"
+  type    = string
+  default = "producer-lambda-function"
 }
 
 variable "producer_api_gateway_name" {
-    description = "Name of the producer api gateway"
+  description = "Name of the producer api gateway"
 
-    type = string
-    default = "producer-api-gateway"
+  type    = string
+  default = "producer-api-gateway"
 }
 
 variable "producer_lambda_source_path" {
-    description = "Path to the producer lambda source"
+  description = "Path to the producer lambda source"
 
-    type = string
-    default = "./producer_function"
+  type    = string
+  default = "./producer_function"
 }
 
 variable "producer_lambda_runtime" {
-    description = "Runtime for the producer lambda"
+  description = "Runtime for the producer lambda"
 
-    type = string
-    default = "python3.8"
+  type    = string
+  default = "python3.8"
 }
 
 variable "producer_lambda_handler" {
-    description = "Handler for the producer lambda"
+  description = "Handler for the producer lambda"
 
-    type = string
-    default = "producer_function.lambda_handler"
+  type    = string
+  default = "producer_function.lambda_handler"
 }
 
 variable "producer_apigateway_stage_name" {
-    description = "Name of the API gateway stage for the producer lambda"
+  description = "Name of the API gateway stage for the producer lambda"
 
-    type = string
-    default = "prod"
+  type    = string
+  default = "prod"
 }
 
 variable "producer_invocation_route_key" {
-    description = "Route key for the producer lambda"
+  description = "Route key for the producer lambda"
 
-    type = string
-    default = "POST /queue"
+  type    = string
+  default = "POST /queue"
 }
 
 variable "consumer_lambda_function_name" {
-    description = "Name of the consumer lambda"
+  description = "Name of the consumer lambda"
 
-    type = string
-    default = "consumer-lambda-function"
+  type    = string
+  default = "consumer-lambda-function"
 }
 
 variable "consumer_lambda_runtime" {
-    description = "Runtime for the consumer lambda"
+  description = "Runtime for the consumer lambda"
 
-    type = string
-    default = "python3.8"
+  type    = string
+  default = "python3.8"
 }
 
 variable "consumer_lambda_handler" {
-    description = "Handler for the consumer lambda"
+  description = "Handler for the consumer lambda"
 
-    type = string
-    default = "consumer_function.lambda_handler"
+  type    = string
+  default = "consumer_function.lambda_handler"
 }
 
 variable "consumer_lambda_source_path" {
-    description = "Path to the consumer lambda source"
+  description = "Path to the consumer lambda source"
 
-    type = string
-    default = "./consumer_function"
+  type    = string
+  default = "./consumer_function"
 }
 
 variable "queue_name" {
-    description = "Name of the queue"
+  description = "Name of the queue"
 
-    type = string
-    default = "producer-consumer-queue"
+  type    = string
+  default = "producer-consumer-queue"
 }
 
 variable "consumer_timeout_seconds" {
-    description = "Timeout for the consumer lambda"
+  description = "Timeout for the consumer lambda"
 
-    type = number
-    default = 900
+  type    = number
+  default = 900
 }
